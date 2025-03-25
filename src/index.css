@@ -39,3 +39,27 @@ header > p {
   line-height: 100%;
   color: #8e8e8e;
 }
+
+/* Status Bar */
+#statusBar {
+  text-align: center;
+  padding-top: .6rem;
+  padding-bottom: .4rem;
+  border-radius: 4px;
+  max-width: 35.2rem;
+  height: 5.9rem;
+  background-color: #10A95B;
+}
+
+#statusBar > h2,
+#statusBar > span {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 100%;
+  color: #f9f4da;
+}
+
+#statusBar > span {
+  font-size: 1.6rem;
+}
