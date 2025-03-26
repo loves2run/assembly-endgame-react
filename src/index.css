@@ -15,6 +15,7 @@ body {
   height: 100vh;
   display: flex;
   justify-content: center;
+  min-width: 23rem;
 }
 
 /* Header Section */
@@ -43,6 +44,7 @@ header > p {
 /* Status Bar */
 #statusBar {
   text-align: center;
+  margin-bottom: 2rem;
   padding-top: .6rem;
   padding-bottom: .4rem;
   border-radius: 4px;
@@ -62,4 +64,20 @@ header > p {
 
 #statusBar > span {
   font-size: 1.6rem;
+}
+
+/* Languages sections */
+
+section.languageChips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  max-width: 35.2rem;
+}
+
+span.langChips {
+  padding: .45rem;
+  border-radius: 3px;
 }
