@@ -75,9 +75,32 @@ section.languageChips {
   align-items: center;
   gap: .5rem;
   max-width: 35.2rem;
+  margin-bottom: 2rem;
 }
 
 span.langChips {
   padding: .45rem;
   border-radius: 3px;
+}
+
+/* Word Section */
+section.word {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .2rem;
+}
+
+span.letterChip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 100%;
+  width: 4rem;
+  height: 4rem;
+  padding: .6rem;
+  border-bottom: 1px solid #f9f4da;
+  background-color: #323232;
 }
