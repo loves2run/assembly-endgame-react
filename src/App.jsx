@@ -21,6 +21,8 @@ export default function AssemblyEndgame() {
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
+  console.log("guesses:", guesses)
+
 /* 
 Bob showed us 2 methods
   1) first method uses a ternary to check if the prevGuesses array includes
@@ -62,23 +64,28 @@ Bob showed us 2 methods
   const letterElements = currentWord.split('')
       .map((letter, index) => <span className='letterChip' key={index}>{letter.toUpperCase()}</span>)
 
+//used Bob's method to render dynamic keyboard colors --> see Notion notes, 
+//      new Lesson - Assembly: Endgame - Keyboard letters styles for guesses for my method
+  const keyboardElements = alphabet.split('').map(letter => {
+    const isGuessed = guesses.includes(letter)
+    const isCorrect = isGuessed && currentWord.includes(letter)
+    const isWrong = isGuessed && !currentWord.includes(letter)
+    const className = clsx({
+      'letters' : true,
+      'correctGuess' : isCorrect,
+      'incorrectGuess' : isWrong
+    })
 
-  const keyboardElements = alphabet
-    .split('')
-    .map(letter => 
+    return (
       <button
-        className= {
-          clsx(
-            'letters',
-            guesses.includes(letter) && {
-              'correctGuess' : currentWord.includes(letter),
-              'incorrectGuess' : !currentWord.includes(letter)
-            })}
+        className={className}
         key={letter} 
         onClick={() => makeGuess(letter)}
       >
         {letter.toUpperCase()}
-      </button>)
+      </button>
+    )
+  })
 
   return (
     <main>
