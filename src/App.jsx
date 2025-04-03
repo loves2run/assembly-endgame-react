@@ -1,20 +1,51 @@
 import {useState} from 'react'
+import clsx from 'clsx'
 import { languages } from "./languages"
 
 
 /**
- * Goal: Build out the main parts of our app
+ * Goal: Allow the user to start guessing the letters
  * 
- * Challenge: 
- * Display the keyboard ⌨️. Use <button>s for each letter
- * since it'll need to be clickable and tab-accessible.
+ * Challenge: Update the keyboard when a letter is right
+ * or wrong.
+ * 
+ * Bonus: use the `clsx` package to easily add conditional 
+ * classNames to the keys of the keyboard. Check the docs 
+ * to learn how to use it 📖
  */
 
 export default function AssemblyEndgame() {
 
   const [currentWord, setCurrentWord] = useState('react')
+  const [guesses, setGuesses] = useState([])
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+/* 
+Bob showed us 2 methods
+  1) first method uses a ternary to check if the prevGuesses array includes
+      the newGuess and if it does, it will not add it again
+  2) the second method uses a set, which does not allow duplicates
+*/  
+
+//**** Method 1
+  const makeGuess = (newGuess) => {
+    setGuesses(prevGuesses => 
+      prevGuesses.includes(newGuess) ? 
+        prevGuesses : 
+        [...prevGuesses, newGuess]
+    )
+  }
+
+  //*** Method 2
+  // const makeGuess = (newGuess) => {
+  //   setGuesses(prevguesses => {
+  //     const letterSet = new Set(prevguesses)
+  //     letterSet.add(newGuess)
+  //     return Array.from(letterSet)
+  //   })
+  
+  // }
 
   const languageElements = languages.map((lang) => {
     const styles = {
@@ -29,12 +60,25 @@ export default function AssemblyEndgame() {
   })
 
   const letterElements = currentWord.split('')
-      .map((letter, index) => <span className="letterChip" key={index}>{letter.toUpperCase()}</span>)
+      .map((letter, index) => <span className='letterChip' key={index}>{letter.toUpperCase()}</span>)
 
 
   const keyboardElements = alphabet
     .split('')
-    .map(letter => <button key={letter}>{letter.toUpperCase()}</button>)
+    .map(letter => 
+      <button
+        className= {
+          clsx(
+            'letters',
+            guesses.includes(letter) && {
+              'correctGuess' : currentWord.includes(letter),
+              'incorrectGuess' : !currentWord.includes(letter)
+            })}
+        key={letter} 
+        onClick={() => makeGuess(letter)}
+      >
+        {letter.toUpperCase()}
+      </button>)
 
   return (
     <main>

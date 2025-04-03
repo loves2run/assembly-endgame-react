@@ -128,7 +128,7 @@ section.keyboard {
   margin-bottom: 2rem;
 }
 
-section.keyboard > button {
+.letters {
   width: 3.5rem;
   height: 3.5rem;
   padding: .6rem;
@@ -153,4 +153,12 @@ button.newGame {
   font-weight: 600;
   line-height: 100%;
   cursor: pointer;
+}
+
+.correctGuess {
+  background-color: #10a95b;
+}
+
+.incorrectGuess {
+  background-color: #ec5d49;
 }
