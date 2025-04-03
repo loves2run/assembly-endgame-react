@@ -128,7 +128,7 @@ section.keyboard {
   margin-bottom: 2rem;
 }
 
-.letters {
+section.keyboard > button.letters {
   width: 3.5rem;
   height: 3.5rem;
   padding: .6rem;
@@ -139,6 +139,15 @@ section.keyboard {
   border-radius: 4px;
   cursor: pointer;
 }
+
+section.keyboard > button.correctGuess {
+  background-color: #10a95b;
+}
+
+section.keyboard > button.incorrectGuess {
+  background-color: #ec5d49;
+}
+
 
 button.newGame {
   width: 22.8rem;
@@ -155,10 +164,3 @@ button.newGame {
   cursor: pointer;
 }
 
-.correctGuess {
-  background-color: #10a95b;
-}
-
-.incorrectGuess {
-  background-color: #ec5d49;
-}
