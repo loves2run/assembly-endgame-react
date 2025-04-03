@@ -6,12 +6,8 @@ import { languages } from "./languages"
 /**
  * Goal: Allow the user to start guessing the letters
  * 
- * Challenge: Update the keyboard when a letter is right
- * or wrong.
- * 
- * Bonus: use the `clsx` package to easily add conditional 
- * classNames to the keys of the keyboard. Check the docs 
- * to learn how to use it 📖
+ * Challenge: Only display the correctly-guessed letters
+ * in the word
  */
 
 export default function AssemblyEndgame() {
@@ -61,8 +57,10 @@ Bob showed us 2 methods
     )
   })
 
-  const letterElements = currentWord.split('')
-      .map((letter, index) => <span className='letterChip' key={index}>{letter.toUpperCase()}</span>)
+  const letterElements = currentWord.split('').map((letter, index) => (
+      <span className='letterChip' key={index}>
+        {guesses.includes(letter) ? letter.toUpperCase() : ''}</span>
+  ))
 
 //used Bob's method to render dynamic keyboard colors --> see Notion notes, 
 //      new Lesson - Assembly: Endgame - Keyboard letters styles for guesses for my method
