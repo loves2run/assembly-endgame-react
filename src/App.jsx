@@ -2,17 +2,6 @@ import {useState} from 'react'
 import clsx from 'clsx'
 import { languages } from "./languages"
 
-
-/**
- * Goal: Add in the incorrect guesses mechanism to the game
- * 
- * Challenge: Derive a variable (`wrongGuessCount`) for the 
- * number of incorrect guesses by using the other state 
- * values we're already holding in the component.
- * 
- * console.log the wrongGuessCount for now
- */
-
 export default function AssemblyEndgame() {
   //state values
   const [currentWord, setCurrentWord] = useState('react')
@@ -51,13 +40,29 @@ Bob showed us 2 methods
   
   // }
 
-  const languageElements = languages.map((lang) => {
+  /**
+ * Goal: Add in the incorrect guesses mechanism to the game
+ * 
+ * Challenge: Derive a variable (`wrongGuessCount`) for the 
+ * number of incorrect guesses by using the other state 
+ * values we're already holding in the component.
+ * 
+ * console.log the wrongGuessCount for now
+ */
+
+  const languageElements = languages.map((lang, index) => {
+
+    const lostLanguage = index < wrongGuessCount
+
     const styles = {
       backgroundColor: lang.backgroundColor,
       color: lang.color
     }
     return (
-      <span className="langChips" key={lang.name} style={styles}>
+      <span 
+        className={clsx('langChips',{'lost' : lostLanguage})}
+        key={lang.name} style={styles}
+      >
         {lang.name}
       </span>
     )

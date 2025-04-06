@@ -93,6 +93,22 @@ section.languageChips {
 span.langChips {
   padding: .45rem;
   border-radius: 3px;
+  position: relative;
+}
+
+/* Dimmed overlay with skull on "lost" languages */
+span.langChips.lost::before {
+  content: '💀';
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 1.36rem;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.7);
 }
 
 /* Word Section */
