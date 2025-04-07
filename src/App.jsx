@@ -2,6 +2,19 @@ import {useState} from 'react'
 import clsx from 'clsx'
 import { languages } from "./languages"
 
+/**
+ * Goal: Add in the incorrect guesses mechanism to the game
+ * 
+ * Challenge:
+ * 1. Create a variable `isGameOver` which evaluates to `true`
+ *    if the user has guessed incorrectly 8 times. Consider how
+ *    we might make this more dynamic if we were ever to add or
+ *    remove languages from the languages array.
+ * 2. Conditionally render the New Game button only if the game
+ *    is over.
+ */
+
+
 export default function AssemblyEndgame() {
   //state values
   const [currentWord, setCurrentWord] = useState('react')
@@ -9,7 +22,13 @@ export default function AssemblyEndgame() {
 
   //derived values
   const wrongGuessCount = guesses.filter(letter => !currentWord.includes(letter)).length
-  console.log('wrongGuessCount:', wrongGuessCount)
+  const isGameOver = wrongGuessCount >= languages.length -1 || guesses.length - wrongGuessCount >= currentWord.length
+
+  // console.log('isGameOver:', isGameOver)
+  // console.log('wrongGuessCount:', wrongGuessCount)
+  // console.log('languages:', languages.length -1)
+  // console.log('gueses', guesses.length)
+  // console.log('currentWord', currentWord.length)
 
   //static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
@@ -39,16 +58,6 @@ Bob showed us 2 methods
   //   })
   
   // }
-
-  /**
- * Goal: Add in the incorrect guesses mechanism to the game
- * 
- * Challenge: Derive a variable (`wrongGuessCount`) for the 
- * number of incorrect guesses by using the other state 
- * values we're already holding in the component.
- * 
- * console.log the wrongGuessCount for now
- */
 
   const languageElements = languages.map((lang, index) => {
 
@@ -120,7 +129,7 @@ Bob showed us 2 methods
         {keyboardElements}
       </section>
 
-      <button className="newGame">New Game</button>
+      {isGameOver && <button className="newGame">New Game</button>}
 
     </main>
 
