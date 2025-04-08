@@ -58,11 +58,24 @@ header > p {
   margin-bottom: 2rem;
   padding-top: .6rem;
   padding-bottom: .4rem;
+  padding-left: .8rem;
+  padding-right: .8rem;
   border-radius: 4px;
-  min-width: 28rem;
-  max-width: 35.2rem;
+  min-width: 36rem;
+  max-width: 48rem;
   height: 5.9rem;
-  background-color: #10A95B;
+}
+
+.bgGameInProgress {
+  background-color: '#262626';
+}
+
+.bgGameWon {
+  background-color: #10a95b;
+}
+
+.bgGameLost {
+  background-color: #b1212a;
 }
 
 #statusBar > h2,
