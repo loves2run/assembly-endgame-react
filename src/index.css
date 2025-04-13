@@ -52,6 +52,7 @@ header > p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin-bottom: 2rem;
   padding-top: .6rem;
   padding-bottom: .4rem;
@@ -62,6 +63,10 @@ header > p {
   max-width: 35rem;
   min-height: 6rem;
   margin-block: 3rem;
+}
+
+.bgWrongGuess {
+  background-color: #7a5ea7;
 }
 
 .bgGameInProgress {

@@ -1,6 +1,16 @@
 import {useState} from 'react'
 import clsx from 'clsx'
 import { languages } from "./languages"
+import { getFarewellText } from './utils'
+
+/*
+Backlog:
+- farewell messages in status section
+- fix accessibility issues
+- make newGame button work
+- choose a random word from list of words
+- confetti when user wins
+*/
 
 
 
@@ -8,6 +18,7 @@ export default function AssemblyEndgame() {
   //state values
   const [currentWord, setCurrentWord] = useState('react')
   const [guesses, setGuesses] = useState([])
+  const [farewell, setFarewell] = useState('')
 
   //derived values
   const wrongGuessCount = guesses.filter(letter => !currentWord.includes(letter)).length
@@ -27,6 +38,19 @@ Bob showed us 2 methods
 
 //**** Method 1
   const makeGuess = (newGuess) => {
+    if (guesses.includes(newGuess)) return
+ 
+    const isWrong = !currentWord.includes(newGuess)
+
+    if (isWrong) {
+      const lostLanguage = languages[wrongGuessCount]
+      setFarewell(getFarewellText(lostLanguage.name))
+    }
+
+    if (!isWrong) {
+      setFarewell('')
+    }
+    
     setGuesses(prevGuesses => 
       prevGuesses.includes(newGuess) ? 
         prevGuesses : 
@@ -90,19 +114,6 @@ Bob showed us 2 methods
     )
   })
 
-  /**
- * Goal: Add in the incorrect guesses mechanism to the game
- * 
- * Challenge:
- * Conditionally render either the "won" or "lost" statuses
- * from the design, both the text and the styles, based on the
- * new derived variables.
- * 
- * Note: We always want the surrounding `section` to be rendered,
- * so only change the content inside that section. Otherwise the
- * content on the page would jump around a bit too much.
- */
-
   const RenderGameStatus = () => {
 
     if (isGameWon) {
@@ -112,14 +123,24 @@ Bob showed us 2 methods
           <span>Well done! 🎉</span>
         </>
       )
-    } else if (isGameLost) {
+    } 
+    if (isGameLost) {
       return (
         <>
           <h2>Game Over!</h2><br/>
           <span>You lose! Better start learning Assembly 😭</span>
         </>
       )
-    } else {
+    } 
+
+    if (farewell) {
+      return (
+        <>
+          <span style={{fontStyle: 'italic'}}>{farewell} 🫡</span>
+        </>
+      )
+    }
+    else {
       return (<></>)
     }
   }
@@ -134,7 +155,7 @@ Bob showed us 2 methods
           <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
       </header>
 
-      <section id="statusBar" className={clsx({'bgGameInProgress' : !isGameOver, 'bgGameWon': isGameWon, 'bgGameLost' : isGameLost})}>
+      <section id="statusBar" className={clsx({'bgGameInProgress' : !isGameOver, 'bgWrongGuess' : farewell && !isGameOver,'bgGameWon': isGameWon, 'bgGameLost' : isGameLost})}>
         <RenderGameStatus />
       </section>
 
