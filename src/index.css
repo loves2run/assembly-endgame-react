@@ -67,6 +67,7 @@ header > p {
 
 .bgWrongGuess {
   background-color: #7a5ea7;
+  border: 1px dashed black;
 }
 
 .bgGameInProgress {

@@ -5,7 +5,8 @@ import { getFarewellText } from './utils'
 
 /*
 Backlog:
-- farewell messages in status section
+✅ farewell messages in status section
+- Disable the keyboard when the game is over
 - fix accessibility issues
 - make newGame button work
 - choose a random word from list of words
@@ -19,6 +20,7 @@ export default function AssemblyEndgame() {
   const [currentWord, setCurrentWord] = useState('react')
   const [guesses, setGuesses] = useState([])
   const [farewell, setFarewell] = useState('')
+  const [isDisabled, setIsDisabled] = useState(false)
 
   //derived values
   const wrongGuessCount = guesses.filter(letter => !currentWord.includes(letter)).length
@@ -105,6 +107,7 @@ Bob showed us 2 methods
 
     return (
       <button
+        disabled={isGameOver ? true : false}
         className={className}
         key={letter} 
         onClick={() => makeGuess(letter)}
