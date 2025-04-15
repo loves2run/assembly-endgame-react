@@ -1,34 +1,50 @@
 import {useState} from 'react'
 import clsx from 'clsx'
 import { languages } from "./languages"
-import { getFarewellText } from './utils'
+import { getFarewellText, getRandomWord } from './utils'
+// import { words } from './words'
 
 /*
 Backlog:
 ✅ farewell messages in status section
 ✅ Disable the keyboard when the game is over
-- fix accessibility issues
+✅ fix accessibility issues
 - make newGame button work
 - choose a random word from list of words
 - confetti when user wins
 */
 
-
+/*
+  Challenge: Choose a random word from a list of words
+ * 
+ * 1. Create a new function in utils.js that chooses a random
+ *    word from the imported array of words and returns it
+ * 2. import the function into this file
+ * 3. Figure out where to use that function.
+*/
 
 export default function AssemblyEndgame() {
   //state values
-  const [currentWord, setCurrentWord] = useState('react')
+  const [currentWord, setCurrentWord] = useState(() => getRandomWord()) //used lazy state initialization to prevent running this on re-renders
   const [guesses, setGuesses] = useState([])
   const [farewell, setFarewell] = useState('')
 
+  console.log(currentWord)
+
   //derived values
-  const wrongGuessCount = guesses.filter(letter => !currentWord.includes(letter)).length
-  const isGameWon = guesses.length - wrongGuessCount >= currentWord.length
-  const isGameLost = wrongGuessCount >= languages.length -1
+   const wrongGuessCount = guesses.filter(letter => !currentWord.includes(letter)).length
+   const maxWrongGuesses = languages.length - 1
+   const numGuessesRemaining = maxWrongGuesses - wrongGuessCount
+  const isGameWon =
+    currentWord.split('').every(letter => guesses.includes(letter))
+  const isGameLost = wrongGuessCount >= maxWrongGuesses
   const isGameOver = isGameLost || isGameWon
+  const lastGuessedLetter = guesses[guesses.length - 1]
 
   //static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+  console.log("numGuessesRemaining:", numGuessesRemaining)
 
 /* 
 Bob showed us 2 methods
@@ -87,10 +103,12 @@ Bob showed us 2 methods
     )
   })
 
-  const letterElements = currentWord.split('').map((letter, index) => (
+  const letterElements = currentWord.split('').map((letter, index) => {
+    return (
       <span className='letterChip' key={index}>
-        {guesses.includes(letter) ? letter.toUpperCase() : ''}</span>
-  ))
+        {guesses.includes(letter) ? letter.toUpperCase() : ''}
+      </span>
+  )})
 
 //used Bob's method to render dynamic keyboard colors --> see Notion notes, 
 //      new Lesson - Assembly: Endgame - Keyboard letters styles for guesses for my method
@@ -110,6 +128,8 @@ Bob showed us 2 methods
         className={className}
         key={letter} 
         onClick={() => makeGuess(letter)}
+        aria-disabled={guesses.includes(letter)}
+        aria-label={`Letter ${letter}`}
       >
         {letter.toUpperCase()}
       </button>
@@ -157,7 +177,16 @@ Bob showed us 2 methods
           <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
       </header>
 
-      <section id="statusBar" className={clsx({'bgGameInProgress' : !isGameOver, 'bgWrongGuess' : farewell && !isGameOver,'bgGameWon': isGameWon, 'bgGameLost' : isGameLost})}>
+      <section 
+        id="statusBar" 
+        className={clsx({
+          'bgGameInProgress' : !isGameOver, 
+          'bgWrongGuess' : farewell && !isGameOver,
+          'bgGameWon': isGameWon, 
+          'bgGameLost' : isGameLost})}
+        aria-live='polite'
+        role='status'
+          >
         <RenderGameStatus />
       </section>
 
@@ -167,6 +196,29 @@ Bob showed us 2 methods
 
       <section className="word">
         {letterElements}
+      </section>
+
+
+      {/* Combined visually-hidden aria-live region for status updates */}
+      <section 
+        className="sr-only"
+        aria-live='polite'
+        role='status'
+      >
+          <p>
+            {currentWord.includes(lastGuessedLetter) ?
+              `Correct! The letter ${lastGuessedLetter} is in the word. ` :
+              `Sorry, the letter ${lastGuessedLetter} is not in the word.`
+            }
+            You have {numGuessesRemaining} attempts left.
+          </p>
+
+          <p>
+            Current word: {currentWord.split('').map(letter =>
+              guesses.includes(letter) ? letter + '.' : 'blank.')
+              .join(' ')}
+          </p>
+        
       </section>
 
       <section className="keyboard">
