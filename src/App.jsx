@@ -2,7 +2,8 @@ import {useState} from 'react'
 import clsx from 'clsx'
 import { languages } from "./languages"
 import { getFarewellText, getRandomWord } from './utils'
-// import { words } from './words'
+import Confetti from 'react-confetti'
+import { useWindowSize } from '@react-hook/window-size'
 
 /*
 Backlog:
@@ -33,7 +34,7 @@ export default function AssemblyEndgame() {
    const wrongGuessCount = guesses.filter(letter => !currentWord.includes(letter)).length
    const maxWrongGuesses = languages.length - 1
    const numGuessesRemaining = maxWrongGuesses - wrongGuessCount
-  const isGameWon =
+   const isGameWon =
     currentWord.split('').every(letter => guesses.includes(letter))
   const isGameLost = wrongGuessCount >= maxWrongGuesses
   const isGameOver = isGameLost || isGameWon
@@ -179,9 +180,17 @@ Bob showed us 2 methods
     setCurrentWord(getRandomWord())
   }
 
+  const MakeConfetti = () => {
+    const {width, height} = useWindowSize()
+    return(
+      <Confetti width={width} height={height}/>
+    )
+  }
+
 
   return (
     <main>
+        {isGameWon && <MakeConfetti />}
       <header>
           <h1>Assembly: Endgame</h1>
           <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
