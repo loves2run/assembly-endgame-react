@@ -13,7 +13,7 @@ Backlog:
 ✅ make newGame button work
 ✅ choose a random word from list of words
 ✅ Reveal what the word was if the user loses the game
-- confetti when user wins
+✅ confetti when user wins
 */
 
 /*
