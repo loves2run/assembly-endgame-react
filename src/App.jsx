@@ -5,22 +5,6 @@ import { getFarewellText, getRandomWord } from './utils'
 import Confetti from 'react-confetti'
 import { useWindowSize } from '@react-hook/window-size'
 
-/*
-Backlog:
-✅ farewell messages in status section
-✅ Disable the keyboard when the game is over
-✅ fix accessibility issues
-✅ make newGame button work
-✅ choose a random word from list of words
-✅ Reveal what the word was if the user loses the game
-✅ confetti when user wins
-*/
-
-/*
- * Challenge: Reveal the missing letters of the word if the user
- * loses the game. Style the missing letters to have the same red
- * color as the wrong letter keys.
-*/
 
 export default function AssemblyEndgame() {
   //state values
