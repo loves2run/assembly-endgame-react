@@ -183,7 +183,7 @@ Bob showed us 2 methods
   const MakeConfetti = () => {
     const {width, height} = useWindowSize()
     return(
-      <Confetti width={width} height={height}/>
+      <Confetti width={width} height={height} recycle={false} numberOfPieces={1000}/>
     )
   }
 
