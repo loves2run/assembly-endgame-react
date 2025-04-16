@@ -151,6 +151,10 @@ span.letterChip {
   background-color: #323232;
 }
 
+span.letterChip.incorrectGuess {
+  color: #ec5d49;
+}
+
 /* Keyboard Section */
 section.keyboard {
   display: flex;

@@ -9,18 +9,16 @@ Backlog:
 ✅ farewell messages in status section
 ✅ Disable the keyboard when the game is over
 ✅ fix accessibility issues
-- make newGame button work
-- choose a random word from list of words
+✅ make newGame button work
+✅ choose a random word from list of words
+✅ Reveal what the word was if the user loses the game
 - confetti when user wins
 */
 
 /*
-  Challenge: Choose a random word from a list of words
- * 
- * 1. Create a new function in utils.js that chooses a random
- *    word from the imported array of words and returns it
- * 2. import the function into this file
- * 3. Figure out where to use that function.
+ * Challenge: Reveal the missing letters of the word if the user
+ * loses the game. Style the missing letters to have the same red
+ * color as the wrong letter keys.
 */
 
 export default function AssemblyEndgame() {
@@ -40,6 +38,7 @@ export default function AssemblyEndgame() {
   const isGameLost = wrongGuessCount >= maxWrongGuesses
   const isGameOver = isGameLost || isGameWon
   const lastGuessedLetter = guesses[guesses.length - 1]
+
 
   //static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
@@ -104,9 +103,16 @@ Bob showed us 2 methods
   })
 
   const letterElements = currentWord.split('').map((letter, index) => {
+    const letterStyles = clsx({
+      'letterChip' : true,
+      'incorrectGuess' : isGameLost && !guesses.includes(letter)
+    })
     return (
-      <span className='letterChip' key={index}>
-        {guesses.includes(letter) ? letter.toUpperCase() : ''}
+      <span className={letterStyles} key={index}>
+        {guesses.includes(letter) ? 
+        letter.toUpperCase() : 
+        isGameLost ? 
+        letter.toUpperCase() : ''}
       </span>
   )})
 
@@ -167,7 +173,11 @@ Bob showed us 2 methods
     }
   }
 
-
+  const handleGameReset = () => {
+    setGuesses([])
+    setFarewell('')
+    setCurrentWord(getRandomWord())
+  }
 
 
   return (
@@ -225,7 +235,7 @@ Bob showed us 2 methods
         {keyboardElements}
       </section>
 
-      {isGameOver && <button className="newGame">New Game</button>}
+      {isGameOver && <button className="newGame" onClick={handleGameReset}>New Game</button>}
 
     </main>
 
