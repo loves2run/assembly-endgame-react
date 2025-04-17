@@ -15,6 +15,7 @@
   "dependencies": {
     "@react-hook/window-size": "^3.1.1",
     "clsx": "^2.1.1",
+    "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-confetti": "^6.4.0",
     "react-dom": "^19.0.0"
